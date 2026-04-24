@@ -4,6 +4,19 @@ HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Terraform ###
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+### Secrets ###
+.env
+
+### Build ###
+target/
+
 ### STS ###
 .apt_generated
 .classpath

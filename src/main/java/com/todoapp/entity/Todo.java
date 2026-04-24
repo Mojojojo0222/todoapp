@@ -3,35 +3,31 @@ package com.todoapp.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "todolist")
 public class Todo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private boolean completed;
-    
-  
+    @Column(name = "task")
+    private String task;
 
-    public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public boolean isCompleted() {
-		return completed;
-	}
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
-	}
-    
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private java.sql.Timestamp createdAt;
+
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getTask() { return task; }
+    public void setTask(String task) { this.task = task; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public java.sql.Timestamp getCreatedAt() { return createdAt; }
 }
-

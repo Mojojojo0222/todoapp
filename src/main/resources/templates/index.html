@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Todo App</title>
     <link rel="stylesheet" href="/style.css">
@@ -8,14 +8,16 @@
 <h2>Todo App</h2>
 
 <form action="/add" method="post">
-    <input type="text" name="title" required />
+    <input type="text" name="title" required maxlength="255" />
     <button>Add</button>
 </form>
 
 <ul>
     <li th:each="todo : ${todos}">
-        <span th:text="${todo.title}"></span>
-        <a th:href="@{/delete/{id}(id=${todo.id})}">❌</a>
+        <span th:text="${todo.task}"></span>
+        <form th:action="@{/delete/{id}(id=${todo.id})}" method="post" style="display:inline">
+            <button type="submit">❌</button>
+        </form>
     </li>
 </ul>
 </body>

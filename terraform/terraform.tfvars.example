@@ -1,0 +1,4 @@
+vpc_id          = "vpc-xxxxxxxxxxxxxxxxx"
+db_username     = "admin"
+db_password     = "YourStrongPassword123!"
+allowed_ssh_cidr = "YOUR_IP/32"

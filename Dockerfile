@@ -1,17 +1,9 @@
-# -------- BUILD STAGE --------
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:21 AS builder
-
-# Install required tools for mvnw
-RUN yum install -y tar gzip
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
-COPY . .
-RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
-# -------- RUNTIME STAGE --------
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:21
-WORKDIR /app
-COPY --from=builder /app/target/*.jar app.jar
-EXPOSE 8082
+COPY target/todoapp-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 8080
+
 ENTRYPOINT ["java","-jar","app.jar"]
-

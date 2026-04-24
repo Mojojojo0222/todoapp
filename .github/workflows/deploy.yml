@@ -59,4 +59,10 @@ jobs:
             sudo docker pull 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:$IMAGE_TAG
             sudo docker stop todoapp || true
             sudo docker rm todoapp || true
-            sudo docker run -d --name todoapp -p 8080:8080 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:$IMAGE_TAG
+            sudo docker run -d --name todoapp -p 8080:8080 \
+              -e DB_HOST=todo-mysql-db.cbo0c6qogjdf.ap-south-1.rds.amazonaws.com \
+              -e DB_PORT=3306 \
+              -e DB_NAME=tododb \
+              -e DB_USER=$(sudo aws ssm get-parameter --name "/todoapp/db_username" --with-decryption --query Parameter.Value --output text --region ap-south-1) \
+              -e DB_PASS=$(sudo aws ssm get-parameter --name "/todoapp/db_password" --with-decryption --query Parameter.Value --output text --region ap-south-1) \
+              083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:$IMAGE_TAG

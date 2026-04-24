@@ -39,7 +39,6 @@ resource "aws_instance" "todo_ec2" {
               -e DB_USER=$DB_USER \
               -e DB_PASS=$DB_PASS \
               -e DB_NAME=tododb \
-              -e PORT=8080 \
               ${aws_ecr_repository.todo_repo.repository_url}:latest
               EOF
 

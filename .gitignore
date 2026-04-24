@@ -3,7 +3,7 @@ HELP.md
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+whiteboard-key2.pem
 ### Terraform ###
 terraform.tfvars
 *.tfstate

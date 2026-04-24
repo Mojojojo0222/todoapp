@@ -36,10 +36,12 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build and Push Docker Image
+        env:
+          ECR_REPO: 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo
         run: |
           docker build -t todoapp .
-          docker tag todoapp:latest ${{ secrets.ECR_URL }}:latest
-          docker push ${{ secrets.ECR_URL }}:latest
+          docker tag todoapp:latest $ECR_REPO:latest
+          docker push $ECR_REPO:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1
@@ -48,9 +50,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            aws ecr get-login-password --region ${{ env.AWS_REGION }} | \
-              docker login --username AWS --password-stdin ${{ secrets.ECR_URL }}
-            docker pull ${{ secrets.ECR_URL }}:latest
+            aws ecr get-login-password --region ap-south-1 | \
+              docker login --username AWS --password-stdin 083777493383.dkr.ecr.ap-south-1.amazonaws.com
+            docker pull 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:latest
             docker stop todoapp || true
             docker rm todoapp || true
-            docker run -d --name todoapp -p 8080:8080 ${{ secrets.ECR_URL }}:latest
+            docker run -d --name todoapp -p 8080:8080 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:latest

@@ -54,9 +54,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           envs: IMAGE_TAG
           script: |
-            aws ecr get-login-password --region ap-south-1 | \
-              docker login --username AWS --password-stdin 083777493383.dkr.ecr.ap-south-1.amazonaws.com
-            docker pull 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:$IMAGE_TAG
-            docker stop todoapp || true
-            docker rm todoapp || true
-            docker run -d --name todoapp -p 8080:8080 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:$IMAGE_TAG
+            sudo aws ecr get-login-password --region ap-south-1 | \
+              sudo docker login --username AWS --password-stdin 083777493383.dkr.ecr.ap-south-1.amazonaws.com
+            sudo docker pull 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:$IMAGE_TAG
+            sudo docker stop todoapp || true
+            sudo docker rm todoapp || true
+            sudo docker run -d --name todoapp -p 8080:8080 083777493383.dkr.ecr.ap-south-1.amazonaws.com/todoapp-repo:$IMAGE_TAG

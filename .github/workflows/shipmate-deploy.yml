@@ -1,0 +1,45 @@
+name: shipmate-deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  CHART_VALUES: shipmate/todoapp/helm/values.yaml
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t ghcr.io/mojojojo0222/todoapp:$IMAGE_TAG .
+          docker push ghcr.io/mojojojo0222/todoapp:$IMAGE_TAG
+      - name: Bump chart tag
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          if grep -q '^  tag:' "$CHART_VALUES"; then
+            sed -i "s|^  tag:.*|  tag: $IMAGE_TAG|" "$CHART_VALUES"
+          else
+            sed -i "s|^  pullPolicy: Always|  pullPolicy: Always\n  tag: $IMAGE_TAG|" "$CHART_VALUES"
+          fi
+          git config user.name "shipmate-bot"
+          git config user.email "shipmate@users.noreply.github.com"
+          git add "$CHART_VALUES"
+          git commit -m "chore: shipmate bump tag to $IMAGE_TAG [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}

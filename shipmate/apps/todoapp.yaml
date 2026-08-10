@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: todoapp
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Mojojojo0222/todoapp.git
+    targetRevision: HEAD
+    path: shipmate/todoapp/helm
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: shipmate-todoapp
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,29 @@
+image:
+  repository: ghcr.io/mojojojo0222/todoapp
+  tag: latest
+  pullPolicy: Always
+
+app:
+  name: todoapp
+  namespace: shipmate-todoapp
+  replicas: 2
+  port: 8080
+  serviceType: NodePort
+  healthPath: /actuator/health
+  resources:
+    requests:
+      cpu: 300m
+      memory: 6144Mi
+    limits:
+      cpu: 600m
+      memory: 9216Mi
+  hpa:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+    cpuTarget: 60
+
+db:
+  engine: mysql
+  storage: 20Gi
+  port: 3306

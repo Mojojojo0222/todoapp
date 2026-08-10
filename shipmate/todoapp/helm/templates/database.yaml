@@ -38,7 +38,7 @@ spec:
               value: app
             - name: MYSQL_PASSWORD
               value: app
-                          ports:
+          ports:
             - containerPort: {{ .Values.db.port }}
           volumeMounts:
             - name: data

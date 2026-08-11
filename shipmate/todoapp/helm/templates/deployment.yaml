@@ -34,6 +34,8 @@ spec:
             initialDelaySeconds: 40
             periodSeconds: 15
           env:
+            - name: PORT
+              value: "{{ .Values.app.port }}"
             - name: DB_HOST
               value: {{ .Values.app.name }}-db
             - name: DB_PORT

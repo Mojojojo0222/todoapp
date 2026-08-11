@@ -25,17 +25,15 @@ spec:
             httpGet:
               path: {{ .Values.app.healthPath }}
               port: {{ .Values.app.port }}
-            initialDelaySeconds: 60
+            initialDelaySeconds: 15
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: {{ .Values.app.healthPath }}
               port: {{ .Values.app.port }}
-            initialDelaySeconds: 120
+            initialDelaySeconds: 40
             periodSeconds: 15
           env:
-            - name: PORT
-              value: "{{ .Values.app.port }}"
             - name: DB_HOST
               value: {{ .Values.app.name }}-db
             - name: DB_PORT

@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/mojojojo0222/todoapp
-  tag: 31f73bc15405aec2e25a1b49e50f858be31e8d8a
+  tag: latest
   pullPolicy: Always
 
 app:

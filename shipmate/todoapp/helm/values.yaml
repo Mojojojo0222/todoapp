@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/mojojojo0222/todoapp
-  tag: a3afe0a9c2a4696e1eb0807dbbd78b429ee4e017
+  tag: latest
   pullPolicy: Always
 
 app:
@@ -12,10 +12,10 @@ app:
   healthPath: /actuator/health
   resources:
     requests:
-      cpu: 100m
+      cpu: 500m
       memory: 1024Mi
     limits:
-      cpu: 200m
+      cpu: 1000m
       memory: 1536Mi
   hpa:
     enabled: true

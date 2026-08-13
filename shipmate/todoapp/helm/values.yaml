@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/mojojojo0222/todoapp
-  tag: f84ad13746ebe9a5ca70839fd57e2ad978e0b1ad
+  tag: latest
   pullPolicy: Always
 
 app:
@@ -8,7 +8,7 @@ app:
   namespace: shipmate-todoapp
   replicas: 1
   port: 8080
-  serviceType: NodePort
+  serviceType: LoadBalancer
   healthPath: /actuator/health
   resources:
     requests:

@@ -25,14 +25,18 @@ spec:
             httpGet:
               path: {{ .Values.app.healthPath }}
               port: {{ .Values.app.port }}
-            initialDelaySeconds: 60
+            initialDelaySeconds: 150
             periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
           livenessProbe:
             httpGet:
               path: {{ .Values.app.healthPath }}
               port: {{ .Values.app.port }}
-            initialDelaySeconds: 120
+            initialDelaySeconds: 300
             periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 5
           env:
             - name: PORT
               value: "{{ .Values.app.port }}"
